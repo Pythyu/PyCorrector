@@ -23,4 +23,4 @@ Then, from the project root directory execute
 ```sh
 python3 Corrector.py
 ```
-A ratings.txt file will be generated where a rating for each compressed file can be found
+A ratings.txt file will be generated with a grade for each student's compressed file.
