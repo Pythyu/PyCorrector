@@ -5,6 +5,16 @@ PyCorrector goals are
 - fast and reliable student's code grading
 - flexible grading functions
 
+## Installation
+
+Made with Python 3.8.10 but most of python 3.X versions should work
+
+All dependencies can be obtained by the following commands
+```sh
+python3 -m pip install -r requirements.txt
+```
+Once that's done, everything should be working !
+
 ## Usage
 
 First move all compressed students code files(.zip/.tar.gz/.7z supported) into the studentFiles folder

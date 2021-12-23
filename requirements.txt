@@ -1,0 +1,4 @@
+EasyProcess==0.3
+entrypoint2==0.2.4
+pyunpack==0.2.2
+PyYAML==6.0
