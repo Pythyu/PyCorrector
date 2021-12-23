@@ -21,7 +21,7 @@ class Decompressor:
         elif "tar.gz" in self.file_extension or "tgz" in self.file_extension or "gz" in self.file_extension:
             self.tar_extract()
         else:
-            print("File at %s couldn't be extracted ! Be sure to use either Zip, Tar or 7z format for your compressed files" % (path))
+            print("File at %s couldn't be extracted ! Be sure to use either Zip, Tar or 7z format for your compressed files" % (self.path))
 
 
     def zip_extract(self):

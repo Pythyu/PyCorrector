@@ -1,4 +1,5 @@
 from os import listdir
+import shutil
 from os.path import isfile, isdir, join, splitext
 import glob
 
@@ -17,4 +18,4 @@ def get_files_with_extension(directory, extent):
 def clean_folder_content(directory):
     files = glob.glob('%s/*' % (directory))
     for f in files:
-        os.remove(f)
+        shutil.rmtree(f)

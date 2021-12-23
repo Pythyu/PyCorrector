@@ -7,7 +7,7 @@ DEBUG = False
 
 tests_functions = []
 
-clean_up_after_run = False
+clean_up_after_run = True
 
 
 def compareFunction(studentOut, registeredOut):
@@ -41,16 +41,14 @@ def rating_routine(module):
 
 
 
-
-
-
-
 def main():
 
     outFile = open("ratings.txt","w")
 
     # Extract compressed files
     for file in get_files("./studentFiles"):
+        if file == ".gitkeep":
+            continue
         dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
         dc.extract()
         sys.path.append("./tmp/%s" % (file))
@@ -68,6 +66,8 @@ def main():
                 print(e)
 
     outFile.close()
+    if clean_up_after_run:
+        clean_folder_content("./tmp")
 
 
 
