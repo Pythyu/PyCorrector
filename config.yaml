@@ -1,0 +1,5 @@
+functions:
+    student_exemple_function: ["text1"]
+
+expected_outputs:
+    student_exemple_function: ["Input text is text1"]
