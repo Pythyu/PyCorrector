@@ -11,10 +11,17 @@ clean_up_after_run = True
 
 
 def compareFunction(studentOut, registeredOut):
+    """
+    Fonction used to compare the student program output and the output registered in the config file
+    |-> can be customized if needed
+    """
     return studentOut in registeredOut
 
 
 def load_config():
+    """
+    Load the config file
+    """
     try:
         with open('config.yaml') as f:
             dt = yaml.load(f, Loader=yaml.FullLoader)
@@ -29,6 +36,9 @@ def load_config():
 
 
 def rating_routine(module):
+    """
+    Rate each of the student's function from the config file data
+    """
     score = 0
     for tests in tests_functions:
         testMethod = getattr(module, tests[0])
@@ -42,7 +52,9 @@ def rating_routine(module):
 
 
 def main():
-
+    """
+    Main Application Logic
+    """
     outFile = open("ratings.txt","w")
 
     # Extract compressed files
@@ -61,7 +73,7 @@ def main():
                 # save the rating
                 outFile.write("%s : %d/%d \n" % (file, score, len(tests_functions)))
             except Exception as e:
-                print("Couldn't properly execute the rating routine to the student python code file")
+                print("Couldn't properly execute the rating routine for the following student python code :", file)
                 print("Reason :")
                 print(e)
 

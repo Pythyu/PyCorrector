@@ -14,6 +14,9 @@ class Decompressor:
         self.filename, self.file_extension = os.path.splitext(path)
 
     def extract(self):
+        """
+        Choose the correct extract method and use it to extract the file
+        """
         if "zip" in self.file_extension:
             self.zip_extract()
         elif "7z" in self.file_extension:
