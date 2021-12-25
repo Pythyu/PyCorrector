@@ -3,6 +3,10 @@ import shutil
 from os.path import isfile, isdir, join, splitext
 import glob
 
+def underscore_format(string):
+    return string.split("_")[0]
+
+
 def get_content(directory):
     """
     Get all content of the specified directory

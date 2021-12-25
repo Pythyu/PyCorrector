@@ -49,6 +49,14 @@ def rating_routine(module):
             print("DEBUG routine : ",tests[0]," : ",studentOut, tests[2]," | actual score : ", score)
     return score
 
+def local_import(pyfile,outFile, folders, length):
+    pym = __import__(pyfile[:-3])
+    score = rating_routine(pym)
+    # save the rating
+    outFile.write("%s : %d/%d \n" % (underscore_format(folders), score, length))
+    if pyfile[:-3] in sys.modules:
+        del sys.modules[pyfile[:-3]]
+
 
 
 def main():
@@ -63,19 +71,20 @@ def main():
             continue
         dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
         dc.extract()
-        sys.path.append("./tmp/%s" % (file))
+
         # Read each extracted files
-        for pyfile in get_files_with_extension("tmp/%s" % (file), "py"):
-            # import and rate it
-            pym = __import__(pyfile[:-3])
-            try:
-                score = rating_routine(pym)
-                # save the rating
-                outFile.write("%s : %d/%d \n" % (file, score, len(tests_functions)))
-            except Exception as e:
-                print("Couldn't properly execute the rating routine for the following student python code :", file)
-                print("Reason :")
-                print(e)
+        for folders in get_folders("tmp/%s" % (file)):
+            sys.path.append("tmp/%s/%s" % (file, folders))
+            for pyfile in get_files_with_extension("tmp/%s/%s" % (file, folders), "py"):
+                # import and rate it
+                try:
+                    local_import(pyfile, outFile, folders, len(tests_functions))
+                except Exception as e:
+                    outFile.write("%s : Error( %s ) \n" % (underscore_format(folders), str(e)))
+                    print("Couldn't properly execute the rating routine for the following student python code :", underscore_format(folders))
+                    print("Reason :")
+                    print(e)
+            sys.path.remove("tmp/%s/%s" % (file, folders))
 
     outFile.close()
     if clean_up_after_run:
