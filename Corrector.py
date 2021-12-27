@@ -1,9 +1,12 @@
 from Decompressor import *
 from FileExplorer import *
+from AutoUpdate import *
 import yaml
 import sys
 
 DEBUG = False
+
+ShowLogMessages = True
 
 tests_functions = []
 clean_up_after_run = True
@@ -91,9 +94,10 @@ def main():
                     local_import(pyfile, outFile, folders, len(tests_functions))
                 except Exception as e:
                     outFile.write("%s : Error( %s ) \n" % (underscore_format(folders), str(e)))
-                    print("Couldn't properly execute the rating routine for the following student python code :", underscore_format(folders))
-                    print("Reason :")
-                    print(e)
+                    if ShowLogMessages:
+                        print("Couldn't properly execute the rating routine for the following student python code :", underscore_format(folders))
+                        print("Reason :")
+                        print(e)
             sys.path.remove("tmp/%s/%s" % (file, folders))
 
     outFile.close()
@@ -102,5 +106,5 @@ def main():
 
 
 
-if __name__ == "__main__" and load_config():
+if __name__ == "__main__" and CheckUpdate() and load_config():
     main()
