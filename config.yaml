@@ -1,7 +1,9 @@
+# give each function the inputs to be rated with
 functions:
     student_exemple_function: ["text1"]
     student_exemple_two: [1,2]
 
+# give each function what outputs are expected
 expected_outputs:
     student_exemple_function: ["Input text is text1"]
     student_exemple_two: [3]
