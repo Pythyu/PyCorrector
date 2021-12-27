@@ -6,9 +6,9 @@ import sys
 DEBUG = False
 
 tests_functions = []
-
 clean_up_after_run = True
 
+########### ALL SCORE FUNCTIONS ###############
 
 def compareFunction(studentOut, registeredOut):
     """
@@ -17,6 +17,16 @@ def compareFunction(studentOut, registeredOut):
     """
     return studentOut in registeredOut
 
+def compareEQFunction(studentOut, registeredOut):
+    """
+    Fonction used to compare the student program output and the output registered in the config file
+    |-> can be customized if needed
+    """
+    return studentOut == registeredOut
+
+score_functions = [compareFunction,compareEQFunction]
+
+################################################
 
 def load_config():
     """
@@ -26,7 +36,7 @@ def load_config():
         with open('config.yaml') as f:
             dt = yaml.load(f, Loader=yaml.FullLoader)
             for item in dt["functions"].keys():
-                tests_functions.append((item, dt["functions"][item], dt["expected_outputs"][item]))
+                tests_functions.append((item, dt["functions"][item], dt["expected_outputs"][item], dt["score_functions"][item]))
         return True
     except Exception as e:
         if DEBUG:
@@ -43,7 +53,7 @@ def rating_routine(module):
     for tests in tests_functions:
         testMethod = getattr(module, tests[0])
         studentOut = testMethod(*tests[1])
-        if compareFunction(studentOut,tests[2]):
+        if score_functions[tests[3]](studentOut,tests[2]):
             score += 1
         if DEBUG:
             print("DEBUG routine : ",tests[0]," : ",studentOut, tests[2]," | actual score : ", score)
@@ -67,7 +77,7 @@ def main():
 
     # Extract compressed files
     for file in get_files("./studentFiles"):
-        if file == ".gitkeep":
+        if file[0] == ".":
             continue
         dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
         dc.extract()

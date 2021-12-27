@@ -5,3 +5,8 @@ functions:
 expected_outputs:
     student_exemple_function: ["Input text is text1"]
     student_exemple_two: [3]
+
+# give each function the ID of the score function used
+score_functions:
+    student_exemple_function: 0
+    student_exemple_two: 0
