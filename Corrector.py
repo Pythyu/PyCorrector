@@ -1,6 +1,7 @@
 from Decompressor import *
 from FileExplorer import *
 from AutoUpdate import *
+from SecurityCheck import *
 import yaml
 import sys
 import timeout_decorator
@@ -91,6 +92,9 @@ def main():
             continue
         dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
         dc.extract()
+
+        # Check the folder security
+        RecursiveTreeCheck("tmp/%s" % (file))
 
         # Read each extracted files
         for folders in get_folders("tmp/%s" % (file)):

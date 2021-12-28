@@ -38,9 +38,9 @@ def CheckUpdate():
         print(out)
         if 'Already up to date' not in out:
             if "requirements.txt" in out:
-                print("\n"+ bcolors.WARNING + "\/!\\ requirements.txt may have been modified \/!\\")
+                print("\n"+ bcolors.WARNING + "/!\\ requirements.txt may have been modified /!\\")
                 print("We recommend using again " + bcolors.UNDERLINE + "python3 -m pip install -r requirements.txt" +bcolors.ENDC)
-            print(bcolors.OKGREEN + "The update is complete \\o\/ : please restart the app to apply the update" + bcolors.ENDC)
+            print(bcolors.OKGREEN + "The update is complete \\o/ : please restart the app to apply the update" + bcolors.ENDC)
             return False
 
         print("\n#####################################\n")
