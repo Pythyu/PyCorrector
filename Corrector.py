@@ -12,22 +12,23 @@ tests_functions = []
 clean_up_after_run = True
 
 ########### ALL SCORE FUNCTIONS ###############
+#Fonction used to compare the student program output and the output registered in the config file
+#|-> can be customized if needed
+###############################################
 
-def compareFunction(studentOut, registeredOut):
+def compareINFunction(studentOut, registeredOut):
     """
-    Fonction used to compare the student program output and the output registered in the config file
-    |-> can be customized if needed
+    If student output is into the output list
     """
     return studentOut in registeredOut
 
 def compareEQFunction(studentOut, registeredOut):
     """
-    Fonction used to compare the student program output and the output registered in the config file
-    |-> can be customized if needed
+    if the student output is equal to the first in the output list
     """
-    return studentOut == registeredOut
+    return studentOut == registeredOut[0]
 
-score_functions = [compareFunction,compareEQFunction]
+score_functions = [compareINFunction,compareEQFunction]
 
 ################################################
 

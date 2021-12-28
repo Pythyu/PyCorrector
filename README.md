@@ -24,3 +24,10 @@ Then, from the project root directory execute
 python3 Corrector.py
 ```
 A ratings.txt file will be generated with a grade for each student's compressed file.
+
+## TODO
+
+- timeout per function
+- more detailed report (excel format)
+- synthesis (excel format)
+- security against suspicious code
