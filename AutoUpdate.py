@@ -41,6 +41,7 @@ def CheckUpdate():
                 print("\n"+ bcolors.WARNING + "\/!\\ requirements.txt may have been modified \/!\\")
                 print("We recommend using again " + bcolors.UNDERLINE + "python3 -m pip install -r requirements.txt" +bcolors.ENDC)
             print(bcolors.OKGREEN + "The update is complete \\o\/ : please restart the app to apply the update" + bcolors.ENDC)
+            return False
 
         print("\n#####################################\n")
         return True
