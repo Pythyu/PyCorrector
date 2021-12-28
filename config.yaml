@@ -13,7 +13,7 @@ score_functions:
     student_exemple_function: 0
     student_exemple_two: 0
 
-# give each function the maximum amount of time they can be running
+# give each function the maximum amount of time (in second) they can be running
 timeout_functions:
     student_exemple_function: 2
     student_exemple_two: 2
