@@ -66,11 +66,16 @@ def rating_routine(module):
 
 def local_import(pyfile,outFile, folders, length):
     pym = __import__(pyfile[:-3])
-    score = rating_routine(pym)
-    # save the rating
-    outFile.write("%s : %d/%d \n" % (underscore_format(folders), score, length))
-    if pyfile[:-3] in sys.modules:
-        del sys.modules[pyfile[:-3]]
+    try:
+        score = rating_routine(pym)
+        # save the rating
+        outFile.write("%s : %d/%d \n" % (underscore_format(folders), score, length))
+        if pyfile[:-3] in sys.modules:
+            del sys.modules[pyfile[:-3]]
+    except Exception as e:
+        if pyfile[:-3] in sys.modules:
+            del sys.modules[pyfile[:-3]]
+        raise e
 
 
 
