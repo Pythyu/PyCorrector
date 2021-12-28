@@ -3,6 +3,7 @@ from FileExplorer import *
 from AutoUpdate import *
 import yaml
 import sys
+import timeout_decorator
 
 DEBUG = False
 
@@ -40,7 +41,7 @@ def load_config():
         with open('config.yaml') as f:
             dt = yaml.load(f, Loader=yaml.FullLoader)
             for item in dt["functions"].keys():
-                tests_functions.append((item, dt["functions"][item], dt["expected_outputs"][item], dt["score_functions"][item]))
+                tests_functions.append((item, dt["functions"][item], dt["expected_outputs"][item], dt["score_functions"][item], dt["timeout_functions"][item]))
         return True
     except Exception as e:
         if DEBUG:
@@ -55,7 +56,7 @@ def rating_routine(module):
     """
     score = 0
     for tests in tests_functions:
-        testMethod = getattr(module, tests[0])
+        testMethod = timeout_decorator.timeout(tests[4])(getattr(module, tests[0]))
         studentOut = testMethod(*tests[1])
         if score_functions[tests[3]](studentOut,tests[2]):
             score += 1

@@ -27,7 +27,8 @@ A ratings.txt file will be generated with a grade for each student's compressed 
 
 ## TODO
 
-- timeout per function
-- more detailed report (excel format)
-- synthesis (excel format)
-- security against suspicious code
+- ~~Timeout per function~~
+- More detailed report (excel format)
+- Synthesis (excel format)
+- Security against suspicious code
+- Cheat detection
