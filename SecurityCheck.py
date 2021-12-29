@@ -1,7 +1,7 @@
 from FileExplorer import *
 import shutil
 
-forbidden_keywords = ["os","sys","subprocess"]
+forbidden_keywords = ["import os","import sys","import subprocess", "from os", "from sys", "from subprocess"]
 
 
 def CheckFile(filePath):
