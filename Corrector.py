@@ -5,6 +5,7 @@ from SecurityCheck import *
 import yaml
 import sys
 import timeout_decorator
+import collections.abc
 
 DEBUG = False
 
@@ -41,8 +42,15 @@ def load_config():
     try:
         with open('config.yaml') as f:
             dt = yaml.load(f, Loader=yaml.FullLoader)
+            static_vars = dt["static"]
             for item in dt["functions"].keys():
-                tests_functions.append((item, dt["functions"][item], dt["expected_outputs"][item], dt["score_functions"][item], dt["timeout_functions"][item]))
+                input = dt["functions"][item]
+                if isinstance(input, collections.abc.Hashable) and static_vars.get(input, None) is not None:
+                    input = static_vars[input]
+                output = dt["expected_outputs"][item]
+                if isinstance(output, collections.abc.Hashable) and static_vars.get(output, None) is not None:
+                    output = static_vars[output]
+                tests_functions.append((item, input, output, dt["score_functions"][item], dt["timeout_functions"][item]))
         return True
     except Exception as e:
         if DEBUG:

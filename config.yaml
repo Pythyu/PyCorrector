@@ -1,6 +1,10 @@
+# assign each yaml static var it's value
+static:
+    myvar: ["text1"]
+
 # give each function the inputs to be rated with
 functions:
-    student_exemple_function: ["text1"]
+    student_exemple_function: myvar
     student_exemple_two: [1,2]
 
 # give each function what outputs are expected

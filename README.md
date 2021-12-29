@@ -29,7 +29,10 @@ A ratings.txt file will be generated with a grade for each student's compressed 
 
 - ~~Timeout per function~~
 - ~~Better auto-update~~
+- multiple input test for the same function
+- ~~static var in config file~~
 - More detailed report (excel format)
 - Synthesis (excel format)
-- Security against suspicious code
+- visual interface for config
+- ~~Security against suspicious code~~
 - Cheat detection
