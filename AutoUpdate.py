@@ -44,7 +44,7 @@ def CheckUpdate():
     try:
         config_update_saving()
         print(bcolors.OKCYAN + "AutoUpdate : check if a new version is available...\n" + bcolors.ENDC)
-        subprocess.Popen(["git", "restore", "."], stdout=subprocess.PIPE)
+        subprocess.Popen(["git", "restore", "*.py", "*.txt"], stdout=subprocess.PIPE)
         process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE)
         out = str(process.communicate()[0])
         print(out)
