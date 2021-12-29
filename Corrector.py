@@ -122,6 +122,7 @@ def main():
                     local_import(pyfile, outFile, folders, len(tests_functions))
                 except Exception as e:
                     outFile.write("%s : Error( %s ) \n" % (underscore_format(folders), str(e)))
+                    outFile.write("\n"+"-="*10+"\n")
                     if ShowLogMessages:
                         print("Couldn't properly execute the rating routine for the following student python code :", underscore_format(folders))
                         print("Reason :")
