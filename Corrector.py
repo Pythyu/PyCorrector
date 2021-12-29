@@ -68,13 +68,15 @@ def rating_routine(module, file):
         try:
             testMethod = timeout_decorator.timeout(tests[4])(getattr(module, tests[0]))
             studentOut = testMethod(*tests[1])
+            gain = 0
             if score_functions[tests[3]](studentOut,tests[2]):
                 score += 1
-            file.write("     %s -> Expected %s got %s\n" % (tests[0], tests[2], studentOut))
+                gain = 1
+            file.write("     %s (%d) -> Expected %s got %s\n" % (tests[0], gain,tests[2], studentOut))
             if DEBUG:
                 print("DEBUG routine : ",tests[0]," : ",studentOut, tests[2]," | actual score : ", score)
         except Exception as e:
-            file.write("     %s -> raised following error : %s\n" % (tests[0], e))
+            file.write("     %s (0) -> raised following error : %s\n" % (tests[0], e))
 
     return score
 
@@ -85,6 +87,7 @@ def local_import(pyfile,outFile, folders, length):
         score = rating_routine(pym, outFile)
         # save the rating
         outFile.write("%s : %d/%d \n" % (underscore_format(folders), score, length))
+        outFile.write("\n"+"-="*10+"\n")
         if pyfile[:-3] in sys.modules:
             del sys.modules[pyfile[:-3]]
     except Exception as e:
