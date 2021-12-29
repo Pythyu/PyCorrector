@@ -12,7 +12,7 @@ DEBUG = False
 ShowLogMessages = False
 
 tests_functions = []
-clean_up_after_run = True
+#clean_up_after_run = True
 
 ########### ALL SCORE FUNCTIONS ###############
 #Fonction used to compare the student program output and the output registered in the config file
@@ -129,8 +129,8 @@ def main():
             sys.path.remove("./studentFiles/%s/%s" % (file, folders))
 
     outFile.close()
-    if clean_up_after_run:
-        clean_folder_content("./tmp")
+    #if clean_up_after_run:
+#        clean_folder_content("./tmp")
 
 
 

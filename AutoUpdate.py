@@ -1,6 +1,7 @@
 import subprocess
 import time
 import os
+from os.path import isfile
 import sys
 import socket
 import shutil
@@ -29,6 +30,8 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def config_update_saving():
+    if(isfile("./tmp/config.yaml")):
+        config_update_restore()
     shutil.copy("./config.yaml","./tmp/config.yaml")
 
 def config_update_restore():
@@ -41,6 +44,7 @@ def CheckUpdate():
     try:
         config_update_saving()
         print(bcolors.OKCYAN + "AutoUpdate : check if a new version is available...\n" + bcolors.ENDC)
+        subprocess.Popen(["git", "restore", "."], stdout=subprocess.PIPE)
         process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE)
         out = str(process.communicate()[0])
         print(out)
@@ -49,15 +53,11 @@ def CheckUpdate():
                 print("\n"+ bcolors.WARNING + "/!\\ config.yaml may have been modified /!\\")
                 print("We saved the previous file at ./tmp/config.yaml !")
                 print(bcolors.FAIL + " Be sure to re-edit the current config.yaml to your need to not lose any data since ./tmp/config.yaml will be deleted at the next start" + bcolors.ENDC)
-            else:
-                config_update_restore()
             if "requirements.txt" in out:
                 print("\n"+ bcolors.WARNING + "/!\\ requirements.txt may have been modified /!\\")
                 print("We recommend using again " + bcolors.UNDERLINE + "python3 -m pip install -r requirements.txt" +bcolors.ENDC)
             print(bcolors.OKGREEN + "The update is complete \\o/ : please restart the app to apply the update" + bcolors.ENDC)
             return False
-
-        config_update_restore()
         print("\n#####################################\n")
         return True
     except Exception as e:
