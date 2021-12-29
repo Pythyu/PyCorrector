@@ -8,7 +8,7 @@ import timeout_decorator
 
 DEBUG = False
 
-ShowLogMessages = True
+ShowLogMessages = False
 
 tests_functions = []
 clean_up_after_run = True
@@ -51,24 +51,30 @@ def load_config():
         return False
 
 
-def rating_routine(module):
+def rating_routine(module, file):
     """
     Rate each of the student's function from the config file data
     """
     score = 0
     for tests in tests_functions:
-        testMethod = timeout_decorator.timeout(tests[4])(getattr(module, tests[0]))
-        studentOut = testMethod(*tests[1])
-        if score_functions[tests[3]](studentOut,tests[2]):
-            score += 1
-        if DEBUG:
-            print("DEBUG routine : ",tests[0]," : ",studentOut, tests[2]," | actual score : ", score)
+        try:
+            testMethod = timeout_decorator.timeout(tests[4])(getattr(module, tests[0]))
+            studentOut = testMethod(*tests[1])
+            if score_functions[tests[3]](studentOut,tests[2]):
+                score += 1
+            file.write("     %s -> Expected %s got %s\n" % (tests[0], tests[2], studentOut))
+            if DEBUG:
+                print("DEBUG routine : ",tests[0]," : ",studentOut, tests[2]," | actual score : ", score)
+        except Exception as e:
+            file.write("     %s -> raised following error : %s\n" % (tests[0], e))
+
     return score
 
 def local_import(pyfile,outFile, folders, length):
     pym = __import__(pyfile[:-3])
     try:
-        score = rating_routine(pym)
+        outFile.write("%s >\n" % (underscore_format(folders)))
+        score = rating_routine(pym, outFile)
         # save the rating
         outFile.write("%s : %d/%d \n" % (underscore_format(folders), score, length))
         if pyfile[:-3] in sys.modules:
@@ -87,19 +93,19 @@ def main():
     outFile = open("ratings.txt","w")
 
     # Extract compressed files
-    for file in get_files("./studentFiles"):
+    for file in get_folders("./studentFiles"):
         if file[0] == ".":
             continue
-        dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
-        dc.extract()
+        #dc = Decompressor(join("./studentFiles",file),"tmp/%s" % (file))
+        #dc.extract()
 
         # Check the folder security
-        RecursiveTreeCheck("tmp/%s" % (file))
+        RecursiveTreeCheck("./studentFiles/%s" % (file))
 
         # Read each extracted files
-        for folders in get_folders("tmp/%s" % (file)):
-            sys.path.append("tmp/%s/%s" % (file, folders))
-            for pyfile in get_files_with_extension("tmp/%s/%s" % (file, folders), "py"):
+        for folders in get_folders("./studentFiles/%s" % (file)):
+            sys.path.append("./studentFiles/%s/%s" % (file, folders))
+            for pyfile in get_files_with_extension("./studentFiles/%s/%s" % (file, folders), "py"):
                 # import and rate it
                 try:
                     local_import(pyfile, outFile, folders, len(tests_functions))
@@ -109,7 +115,7 @@ def main():
                         print("Couldn't properly execute the rating routine for the following student python code :", underscore_format(folders))
                         print("Reason :")
                         print(e)
-            sys.path.remove("tmp/%s/%s" % (file, folders))
+            sys.path.remove("./studentFiles/%s/%s" % (file, folders))
 
     outFile.close()
     if clean_up_after_run:

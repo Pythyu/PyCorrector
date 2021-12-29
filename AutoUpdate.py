@@ -2,6 +2,19 @@ import subprocess
 import time
 import os
 import sys
+import socket
+
+def isConnected():
+    try:
+        # connect to the host -- tells us if the host is actually
+        # reachable
+        sock = socket.create_connection(("www.google.com", 80))
+        if sock is not None:
+            sock.close
+        return True
+    except OSError:
+        pass
+    return False
 
 class bcolors:
     HEADER = '\033[95m'
@@ -31,6 +44,9 @@ def do_execv():
     os.execv(sys.executable, args)
 
 def CheckUpdate():
+    if not isConnected():
+        print(bcolors.WARNING + "couldn't connect to internet... AutoUpdate Aborted...")
+        return True
     try:
         print("AutoUpdate : check if a new version is available...\n")
         process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE)
