@@ -6,6 +6,8 @@ import sys
 import socket
 import shutil
 
+isAutoUpdateDisable = False
+
 def isConnected():
     try:
         # connect to the host -- tells us if the host is actually
@@ -38,8 +40,12 @@ def config_update_restore():
     os.remove("./tmp/config.yaml")
 
 def CheckUpdate():
+    if isAutoUpdateDisable:
+        print(bcolors.WARNING + "AutoUpdate disabled skipping..." + bcolors.ENDC)
+        return True
+
     if not isConnected():
-        print(bcolors.WARNING + "couldn't connect to internet... AutoUpdate Aborted...")
+        print(bcolors.WARNING + "couldn't connect to internet... AutoUpdate Aborted..."+ bcolors.ENDC)
         return True
     try:
         config_update_saving()

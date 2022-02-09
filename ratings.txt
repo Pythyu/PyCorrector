@@ -1,19 +1,24 @@
 GoodStudent >
      student_exemple_function (1) -> Expected ['Input text is text1'] got Input text is text1
+     student_exemple_function (1) -> Expected ['Input text is text2'] got Input text is text2
      student_exemple_two (1) -> Expected [3] got 3
-GoodStudent : 2/2 
+GoodStudent : 3/3 
 
 -=-=-=-=-=-=-=-=-=-=
 loopStudent >
      student_exemple_function (0) -> raised following error : 'Timed Out'
+     student_exemple_function (0) -> raised following error : 'Timed Out'
      student_exemple_two (1) -> Expected [3] got 3
-loopStudent : 1/2 
+loopStudent : 1/3 
 
 -=-=-=-=-=-=-=-=-=-=
 BadStudent >
      student_exemple_function (0) -> Expected ['Input text is text1'] got :)
+     student_exemple_function (0) -> Expected ['Input text is text2'] got :)
      student_exemple_two (1) -> Expected [3] got 3
-BadStudent : 1/2 
+BadStudent : 1/3 
 
 -=-=-=-=-=-=-=-=-=-=
 FailStudent : Error( invalid syntax (ex_student.py, line 7) ) 
+
+-=-=-=-=-=-=-=-=-=-=

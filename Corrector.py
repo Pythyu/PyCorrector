@@ -45,12 +45,23 @@ def load_config():
             static_vars = dt["static"]
             for item in dt["functions"].keys():
                 input = dt["functions"][item]
-                if isinstance(input, collections.abc.Hashable) and static_vars.get(input, None) is not None:
-                    input = static_vars[input]
-                output = dt["expected_outputs"][item]
-                if isinstance(output, collections.abc.Hashable) and static_vars.get(output, None) is not None:
-                    output = static_vars[output]
-                tests_functions.append((item, input, output, dt["score_functions"][item], dt["timeout_functions"][item]))
+                if isinstance(input, list):
+                    size = len(input)
+                    for i in range(size):
+                        inp = input[i]
+                        if isinstance(inp, collections.abc.Hashable) and static_vars.get(inp, None) is not None:
+                            inp = static_vars[inp]
+                        output = dt["expected_outputs"][item][i]
+                        if isinstance(output, collections.abc.Hashable) and static_vars.get(output, None) is not None:
+                            output = static_vars[output]
+                        tests_functions.append((item, inp, output, dt["score_functions"][item], dt["timeout_functions"][item]))
+                else:
+                    if isinstance(input, collections.abc.Hashable) and static_vars.get(input, None) is not None:
+                        input = static_vars[input]
+                    output = dt["expected_outputs"][item]
+                    if isinstance(output, collections.abc.Hashable) and static_vars.get(output, None) is not None:
+                        output = static_vars[output]
+                    tests_functions.append((item, input, output, dt["score_functions"][item], dt["timeout_functions"][item]))
         return True
     except Exception as e:
         if DEBUG:

@@ -4,12 +4,12 @@ static:
 
 # give each function the inputs to be rated with
 functions:
-    student_exemple_function: [myvar, ["text2"]]
+    student_exemple_function: [myvar]
     student_exemple_two: [[1,2]]
 
 # give each function what outputs are expected
 expected_outputs:
-    student_exemple_function: [["Input text is text1"],["Input text is text2"]]
+    student_exemple_function: [["Input text is text1"]]
     student_exemple_two: [[3]]
 
 # give each function the ID of the score function used
